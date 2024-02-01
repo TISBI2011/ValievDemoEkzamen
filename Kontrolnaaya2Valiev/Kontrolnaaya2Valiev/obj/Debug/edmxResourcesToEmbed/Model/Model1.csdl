@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KR2_ValievModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Dealer">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phone" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Order_Dealer" FromRole="Dealer" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Departament">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Properties" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Development" Relationship="Self.FK_Development_Departament" FromRole="Departament" ToRole="Development" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Departament" FromRole="Departament" ToRole="Employees" />
+  </EntityType>
+  <EntityType Name="Development">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idDepartament" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Departament" Relationship="Self.FK_Development_Departament" FromRole="Development" ToRole="Departament" />
+    <NavigationProperty Name="DevelopmentProcess" Relationship="Self.FK_DevelopmentProcess_Development" FromRole="Development" ToRole="DevelopmentProcess" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Order_Development" FromRole="Development" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="DevelopmentProcess">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idEmployees" Type="Int32" Nullable="false" />
+    <Property Name="idDevelopment" Type="Int32" Nullable="false" />
+    <Property Name="Task" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Development" Relationship="Self.FK_DevelopmentProcess_Development" FromRole="DevelopmentProcess" ToRole="Development" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_DevelopmentProcess_Employees" FromRole="DevelopmentProcess" ToRole="Employees" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idRole" Type="Int32" Nullable="false" />
+    <Property Name="idDepartament" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="Int32" Nullable="false" />
+    <Property Name="PassportNumber" Type="Int32" Nullable="false" />
+    <Property Name="Language" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Sallary" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="parol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Departament" Relationship="Self.FK_Employees_Departament" FromRole="Employees" ToRole="Departament" />
+    <NavigationProperty Name="DevelopmentProcess" Relationship="Self.FK_DevelopmentProcess_Employees" FromRole="Employees" ToRole="DevelopmentProcess" />
+    <NavigationProperty Name="Roles" Relationship="Self.FK_Employees_Roles" FromRole="Employees" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idDevelopment" Type="Int32" Nullable="false" />
+    <Property Name="idDealer" Type="Int32" Nullable="false" />
+    <Property Name="DateFrom" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DateTo" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Dealer" Relationship="Self.FK_Order_Dealer" FromRole="Order" ToRole="Dealer" />
+    <NavigationProperty Name="Development" Relationship="Self.FK_Order_Development" FromRole="Order" ToRole="Development" />
+    <NavigationProperty Name="Orderplatform" Relationship="Self.FK_Orderplatform_Order" FromRole="Order" ToRole="Orderplatform" />
+  </EntityType>
+  <EntityType Name="Orderplatform">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idOrder" Type="Int32" Nullable="false" />
+    <Property Name="idPlatform" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Orderplatform_Order" FromRole="Orderplatform" ToRole="Order" />
+    <NavigationProperty Name="Plantform" Relationship="Self.FK_Orderplatform_Plantform" FromRole="Orderplatform" ToRole="Plantform" />
+  </EntityType>
+  <EntityType Name="Plantform">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Ustroistva" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Orderplatform" Relationship="Self.FK_Orderplatform_Plantform" FromRole="Plantform" ToRole="Orderplatform" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Roles" FromRole="Roles" ToRole="Employees" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Order_Dealer">
+    <End Role="Dealer" Type="Self.Dealer" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dealer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="idDealer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Development_Departament">
+    <End Role="Departament" Type="Self.Departament" Multiplicity="1" />
+    <End Role="Development" Type="Self.Development" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departament">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Development">
+        <PropertyRef Name="idDepartament" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employees_Departament">
+    <End Role="Departament" Type="Self.Departament" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departament">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="idDepartament" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DevelopmentProcess_Development">
+    <End Role="Development" Type="Self.Development" Multiplicity="1" />
+    <End Role="DevelopmentProcess" Type="Self.DevelopmentProcess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Development">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DevelopmentProcess">
+        <PropertyRef Name="idDevelopment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Development">
+    <End Role="Development" Type="Self.Development" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Development">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="idDevelopment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DevelopmentProcess_Employees">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="DevelopmentProcess" Type="Self.DevelopmentProcess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DevelopmentProcess">
+        <PropertyRef Name="idEmployees" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employees_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="idRole" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orderplatform_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="Orderplatform" Type="Self.Orderplatform" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orderplatform">
+        <PropertyRef Name="idOrder" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orderplatform_Plantform">
+    <End Role="Plantform" Type="Self.Plantform" Multiplicity="1" />
+    <End Role="Orderplatform" Type="Self.Orderplatform" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Plantform">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Orderplatform">
+        <PropertyRef Name="idPlatform" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KR2_ValievEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Dealer" EntityType="Self.Dealer" />
+    <EntitySet Name="Departament" EntityType="Self.Departament" />
+    <EntitySet Name="Development" EntityType="Self.Development" />
+    <EntitySet Name="DevelopmentProcess" EntityType="Self.DevelopmentProcess" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" />
+    <EntitySet Name="Order" EntityType="Self.Order" />
+    <EntitySet Name="Orderplatform" EntityType="Self.Orderplatform" />
+    <EntitySet Name="Plantform" EntityType="Self.Plantform" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_Order_Dealer" Association="Self.FK_Order_Dealer">
+      <End Role="Dealer" EntitySet="Dealer" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Development_Departament" Association="Self.FK_Development_Departament">
+      <End Role="Departament" EntitySet="Departament" />
+      <End Role="Development" EntitySet="Development" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employees_Departament" Association="Self.FK_Employees_Departament">
+      <End Role="Departament" EntitySet="Departament" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DevelopmentProcess_Development" Association="Self.FK_DevelopmentProcess_Development">
+      <End Role="Development" EntitySet="Development" />
+      <End Role="DevelopmentProcess" EntitySet="DevelopmentProcess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Development" Association="Self.FK_Order_Development">
+      <End Role="Development" EntitySet="Development" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DevelopmentProcess_Employees" Association="Self.FK_DevelopmentProcess_Employees">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="DevelopmentProcess" EntitySet="DevelopmentProcess" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employees_Roles" Association="Self.FK_Employees_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orderplatform_Order" Association="Self.FK_Orderplatform_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="Orderplatform" EntitySet="Orderplatform" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orderplatform_Plantform" Association="Self.FK_Orderplatform_Plantform">
+      <End Role="Plantform" EntitySet="Plantform" />
+      <End Role="Orderplatform" EntitySet="Orderplatform" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
